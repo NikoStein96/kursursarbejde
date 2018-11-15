@@ -1,46 +1,9 @@
 import React, { Component } from "react"
 import facade from "./apiFacade";
-class LogIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { username: "", password: "" }
-  }
-  login = (evt) => {
-    evt.preventDefault();
-    console.log(this.state.username, this.state.password);
-    this.props.login(this.state.username, this.state.password);
-  }
-  onChange = (evt) => {
-    this.setState({ [evt.target.id]: evt.target.value })
-  }
-  render() {
-    return (
-      <div>
-        <h2>Login</h2>
-        <form onSubmit={this.login} onChange={this.onChange} >
-          <input placeholder="User Name" id="username" />
-          <input placeholder="Password" id="password" />
-          <button>Login</button>
-        </form>
-      </div>
-    )
-  }
-}
-class LoggedIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { dataFromServer: "Fetching!!" };
-  }
-  componentDidMount() { }
-  render() {
-    return (
-      <div>
-        <h2>Data Received from server</h2>
-        <h3>{this.state.dataFromServer}</h3>
-      </div>
-    )
-  }
-}
+import LoggedIn from "./components/LoggedIn";
+import LogIn from "./components/LogIn";
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +16,7 @@ class App extends Component {
   render() {
     return (
       <div>
+
         {!this.state.loggedIn ? (<LogIn login={this.login} />) :
           (<div>
             <LoggedIn />

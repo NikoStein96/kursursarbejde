@@ -14,6 +14,7 @@ entity\Role_.class
 entity\User.class
 cors\CorsResponseFilter.class
 rest\ApplicationConfig.class
+rest\StarWars.class
 exceptions\Error.class
 security\UserPrincipal.class
 entity\Role.class
