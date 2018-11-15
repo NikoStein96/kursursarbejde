@@ -1,28 +1,65 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-class App extends Component {
+import React, { Component } from "react"
+import facade from "./apiFacade";
+class LogIn extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { username: "", password: "" }
+  }
+  login = (evt) => {
+    evt.preventDefault();
+    console.log(this.state.username, this.state.password);
+    this.props.login(this.state.username, this.state.password);
+  }
+  onChange = (evt) => {
+    this.setState({ [evt.target.id]: evt.target.value })
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <h2>Login</h2>
+        <form onSubmit={this.login} onChange={this.onChange} >
+          <input placeholder="User Name" id="username" />
+          <input placeholder="Password" id="password" />
+          <button>Login</button>
+        </form>
       </div>
-    );
+    )
   }
 }
-
+class LoggedIn extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { dataFromServer: "Fetching!!" };
+  }
+  componentDidMount() { }
+  render() {
+    return (
+      <div>
+        <h2>Data Received from server</h2>
+        <h3>{this.state.dataFromServer}</h3>
+      </div>
+    )
+  }
+}
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { loggedIn: false }
+  }
+  logout = () => {facade.logout();
+    this.setState({ loggedIn: false });} //TODO
+  login = (user, pass) => {facade.login(user,pass)
+    .then(res =>this.setState({ loggedIn: true }));} //TODO
+  render() {
+    return (
+      <div>
+        {!this.state.loggedIn ? (<LogIn login={this.login} />) :
+          (<div>
+            <LoggedIn />
+            <button onClick={this.logout}>Logout</button>
+          </div>)}
+      </div>
+    )
+  }
+}
 export default App;
