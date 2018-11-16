@@ -17,8 +17,12 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+//import net.minidev.json.JSONArray;
+//import net.minidev.json.JSONObject;
+//import net.minidev.json.JSONStyle;
 
 @Path("starwars")
 public class StarWars {
@@ -32,16 +36,24 @@ public class StarWars {
     }
 
     @GET
+    @Path("/people")
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() throws IOException {
         
-        String starwars = getSwappiData(1);
-        starwars += getSwappiData(2);
-        starwars += getSwappiData(3);
-        starwars += getSwappiData(4);
-        starwars += getSwappiData(5);
+     
+        String json = "{swPersons: ["
+                + "{" +
+                "firstPerson: {" + getSwappiData(1) + "}, \n" +
+                "secondPerson: {" + getSwappiData(2) + "}, \n" +
+                "thirdPerson: {" + getSwappiData(3) + "}, \n" +
+                "fourthPerson: {" + getSwappiData(4) + "}, \n" +
+                "fifthPerson: {" + getSwappiData(5) + "} \n" +
+                "} \n"+
+                "] \n" +
+                "} \n";
+                
+        return json;
 
-        return starwars;
     }
 
     public String getSwappiData(int id) throws MalformedURLException, IOException {
