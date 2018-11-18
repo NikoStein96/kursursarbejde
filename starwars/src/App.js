@@ -3,7 +3,6 @@ import facade from "./apiFacade";
 import LoggedIn from "./components/LoggedIn";
 import LogIn from "./components/LogIn";
 
-
 class App extends Component {
   constructor(props) {
     super(props);
